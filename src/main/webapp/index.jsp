@@ -39,7 +39,6 @@
 
       <h1>CodeU Chat App</h1>
       <h2>Welcome!</h2>
-
       <ul>
         <li><a href="/login">Login</a> to get started.</li>
         <li>Go to the <a href="/conversations">conversations</a> page to
@@ -48,6 +47,11 @@
             project.</li>
         <li>You can <a href="/testdata">load test data</a> to fill the site with
             example data.</li>
+      </ul>
+
+      <h1>Team 6 members</h1>
+      <ul>
+      	<li>José Carlos Peñuelas Armenta</li>
       </ul>
     </div>
   </div>
