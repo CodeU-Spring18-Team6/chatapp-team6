@@ -27,9 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet class responsible for the login page. */
 public class LoginServlet extends HttpServlet {
 
-  // TODO: add password
-  User user = new User(UUID.randomUUID(), username, null, Instant.now());
-
   /** Store class that gives access to Users. */
   private UserStore userStore;
 
@@ -77,7 +74,8 @@ public class LoginServlet extends HttpServlet {
     }
 
     if (!userStore.isUserRegistered(username)) {
-      User user = new User(UUID.randomUUID(), username, Instant.now());
+      // TODO: add password
+      User user = new User(UUID.randomUUID(), username, null, Instant.now());
       userStore.addUser(user);
     }
 
