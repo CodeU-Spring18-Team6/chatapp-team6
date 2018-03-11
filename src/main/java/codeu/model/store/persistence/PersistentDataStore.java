@@ -34,6 +34,8 @@ import java.util.UUID;
  * also performs writes of new of modified objects back to the Datastore.
  */
 public class PersistentDataStore {
+  // TODO: get password from Datastore
+  User user = new User(uuid, userName, null, creationTime);
 
   // Handle to Google AppEngine's Datastore service.
   private DatastoreService datastore;

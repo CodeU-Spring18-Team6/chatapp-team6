@@ -31,6 +31,7 @@ import java.util.UUID;
  * an author, that author must be a member of the Users list.
  */
 public class DefaultDataStore {
+  User user = new User(UUID.randomUUID(), randomUsernames.get(i), "password", Instant.now());
 
   /** Set this to true to use generated default data. */
   private boolean USE_DEFAULT_DATA = true;
