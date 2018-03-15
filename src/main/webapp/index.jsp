@@ -1,12 +1,9 @@
 <%--
   Copyright 2017 Google Inc.
-
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
      http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,6 +36,7 @@
 
       <h1>CodeU Chat App</h1>
       <h2>Welcome!</h2>
+
       <ul>
         <li><a href="/login">Login</a> to get started.</li>
         <li>Go to the <a href="/conversations">conversations</a> page to
@@ -48,10 +46,12 @@
         <li>You can <a href="/testdata">load test data</a> to fill the site with
             example data.</li>
       </ul>
-
-      <h1>Team 6 members</h1>
+            <h1>Team 6 members</h1>
       <ul>
-      	<li>José Carlos Peñuelas Armenta</li>
+        <li>Roberto Rivas</li>
+        <li>Claire Dubiel</li>
+        <li>Jose Carlos</li>
+        <li>Vaishali Kushwaha</li>
       </ul>
     </div>
   </div>
