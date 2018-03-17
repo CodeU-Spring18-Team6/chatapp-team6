@@ -48,10 +48,12 @@
         <li>You can <a href="/testdata">load test data</a> to fill the site with
             example data.</li>
       </ul>
-
-      <h1>Team 6 members</h1>
+            <h1>Team 6 members</h1>
       <ul>
-      	<li>José Carlos Peñuelas Armenta</li>
+        <li>Roberto Rivas</li>
+        <li>Claire Dubiel</li>
+        <li>Jose Carlos</li>
+        <li>Vaishali Kushwaha</li>
       </ul>
     </div>
   </div>
