@@ -34,4 +34,5 @@ public class RegisterServlet extends HttpServlet {
    response.getWriter().println("<p>Username: " + username + "</p>");
    response.getWriter().println("<p>Password: " + password + "</p>");
  }
+  
 }
