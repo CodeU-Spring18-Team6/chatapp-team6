@@ -82,8 +82,8 @@
   </servlet>
   
   <servlet-mapping>
-     <servlet-name>ActivityServlet</servlet-name>
-     <url-pattern>/activity</url-pattern>
+    <servlet-name>ActivityServlet</servlet-name>
+    <url-pattern>/activity</url-pattern>
   </servlet-mapping>
    
 
