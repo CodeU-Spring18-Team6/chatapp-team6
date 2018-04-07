@@ -13,9 +13,15 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.data.Message" %>
+<%@ page import="codeu.model.store.basic.UserStore" %>
+<%
+Conversation conversation = (Conversation) request.getAttribute("conversation");
+List<Message> messages = (List<Message>) request.getAttribute("messages");
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -23,11 +29,30 @@
 <head>
   <title>Activity</title>
   <link rel="stylesheet" href="/css/main.css">
+
+  <style>
+    #chat {
+      background-color: white;
+      height: 500px;
+      overflow-y: scroll
+    }
+  </style>
+
+  <script>
+    // scroll the chat div to the bottom
+    function scrollChat() {
+      var chatDiv = document.getElementById('chat');
+      chatDiv.scrollTop = chatDiv.scrollHeight;
+    };
+  </script>
+
 </head>
 
-<body>
+<body onload="scrollChat()">
+
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
+    <a href="/activity">Activity</a>
     <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
       <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
@@ -36,6 +61,13 @@
     <% } %>
     <a href="/about.jsp">About</a>
   </nav>
+
+  <div id="container">
+
+    <h1>Activity</h1>
+    <p>Here's whats happening on the site!</p>
+    
+  </div>
 
 </body>
 
