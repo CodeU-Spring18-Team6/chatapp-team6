@@ -75,28 +75,15 @@
     <servlet-name>RegisterServlet</servlet-name>
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 9b182733a6f8a1c41790c671ce9aaedf022962d5
   <servlet>
     <servlet-name>ActivityServlet</servlet-name>
     <servlet-class>codeu.controller.ActivityServlet</servlet-class>
   </servlet>
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 9b182733a6f8a1c41790c671ce9aaedf022962d5
   <servlet-mapping>
     <servlet-name>ActivityServlet</servlet-name>
     <url-pattern>/activity</url-pattern>
   </servlet-mapping>
-   
-<<<<<<< HEAD
-
-=======
->>>>>>> 9b182733a6f8a1c41790c671ce9aaedf022962d5
 
 </web-app>
