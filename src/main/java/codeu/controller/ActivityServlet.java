@@ -82,17 +82,43 @@ public class ActivityServlet extends HttpServlet {
 
   /**
    * This function fires when a user navigates to the activty page. It gets all of the
-   * conversations from the model and forwards to activity.jsp for rendering the list.
+   * conversations and their messages from the model and forwards to activity.jsp for rendering the list.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
 
+      List<Conversation> conversations = conversationStore.getAllConversations();
+      if(conversations==null){
+        System.out.println("No activity present.");
+        response.sendRedirect("/conversations");
+        return;
+      }
 
-    List<Conversation> conversations = conversationStore.getAllConversations();
-    request.setAttribute("conversations", conversations);
-    request.getRequestDispatcher("/WEB-INF/view/activity.jsp").forward(request, response);
-    
+      //List<Message> messages = null;
+      Conversation curr = conversations.get(0);
+      UUID conversationId = curr.getId();
+      List<Message> messages = messageStore.getMessagesInConversation(conversationId);
+
+
+
+/*
+      //loop through all conversations, and add their messages to 'messages'
+      for (int i=0; i<conversations.size(); i++){
+        Conversation curr = conversations.get(i);
+        UUID conversationId = curr.getId();
+        List<Message> currMessages = messageStore.getMessagesInConversation(conversationId);
+
+        for(int j=0; j<currMessages.size(); j++){
+          messages.add(currMessages.get(j));
+        }
+      }
+*/
+
+      request.setAttribute("conversation", conversations);
+      request.setAttribute("messages", messages);
+      request.getRequestDispatcher("/WEB-INF/view/activity.jsp").forward(request, response);
+
   }
 
 
