@@ -18,6 +18,7 @@ import java.time.Instant;
 import java.util.UUID;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserTest {
 
@@ -26,7 +27,7 @@ public class UserTest {
     UUID id = UUID.randomUUID();
     String name = "test_username";
     Instant creation = Instant.now();
-    String password = "password";
+    String password = BCrypt.hashpw("password",BCrypt.gensalt());
 
     User user = new User(id, name, password, creation);
 
