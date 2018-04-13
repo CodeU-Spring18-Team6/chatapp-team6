@@ -3,7 +3,7 @@ package codeu.controller;
 
 import java.io.IOException;
 
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 
 import javax.servlet.ServletException;
 
@@ -21,13 +21,13 @@ import org.mockito.Mockito;
 public class ProfileServletTest {
 
 
-  private ProfileServlet profileServlet;
+ private ProfileServlet profileServlet;
 
-  private HttpServletRequest mockRequest;
+ private HttpServletRequest mockRequest;
 
-  private PrintWriter mockPrintWriter;
+ private HttpServletResponse mockResponse;
 
-  private HttpServletResponse mockResponse;
+ private RequestDispatcher mockRequestDispatcher;
 
 
   @Before
@@ -38,12 +38,11 @@ public class ProfileServletTest {
 
     mockRequest = Mockito.mock(HttpServletRequest.class);
 
-    mockPrintWriter = Mockito.mock(PrintWriter.class);
-
     mockResponse = Mockito.mock(HttpServletResponse.class);
 
-    Mockito.when(mockResponse.getWriter()).thenReturn(mockPrintWriter);
+    mockRequestDispatcher = Mockito.mock(RequestDispatcher.class);
 
+    Mockito.when(mockRequest.getRequestDispatcher("/WEB-INF/view/profile.jsp")).thenReturn(mockRequestDispatcher);
   }
 
 
@@ -53,9 +52,6 @@ public class ProfileServletTest {
 
     profileServlet.doGet(mockRequest, mockResponse);
 
-
-    Mockito.verify(mockPrintWriter).println("<h1>RegisterServlet GET request.</h1>");
-
+    Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
-
 }
