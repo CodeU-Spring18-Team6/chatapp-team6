@@ -22,6 +22,7 @@ public class User {
   private final UUID id;
   private final String name;
   private final String hashedPassword;
+  private final String description;
   private final Instant creation;
 
   /**
@@ -35,6 +36,7 @@ public class User {
     this.id = id;
     this.name = name;
     this.hashedPassword = password;
+    this.description = "No description.";
     this.creation = creation;
   }
 
@@ -56,5 +58,12 @@ public class User {
   /** Returns the password of this User.*/
   public String getPassword() {
     return hashedPassword;
+  }
+
+  public void setDescription(String description){
+    this.description = description;
+  }
+  public String getDescription(){
+    return description;
   }
 }
