@@ -22,7 +22,7 @@ public class ProfileServlet extends HttpServlet {
     throws IOException, ServletException {
 
 
-    response.getWriter().println("<h1>RegisterServlet GET request.</h1>");
+    response.getWriter().println("<h1>ProfileServlet GET request.</h1>");
 
   }
 

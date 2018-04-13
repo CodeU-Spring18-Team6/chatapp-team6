@@ -22,7 +22,7 @@ public class User {
   private final UUID id;
   private final String name;
   private final String hashedPassword;
-  private final String description;
+  private String description;
   private final Instant creation;
 
   /**
