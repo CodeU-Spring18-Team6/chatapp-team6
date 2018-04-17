@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import java.util.Comparator;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +80,11 @@ public class ActivityServlet extends HttpServlet {
   void setMessageStore(MessageStore messageStore) {
     this.messageStore = messageStore;
   }
+  class SortbyTime implements Comparator<Message>{
+    public int compare(Message a, Message b){
+        return b.getCreationTime().compareTo(a.getCreationTime());
+    }
+  }
 
   /**
    * This function fires when a user navigates to the activty page. It gets all of the
@@ -102,18 +108,18 @@ public class ActivityServlet extends HttpServlet {
 
 
 
-/*
+
       //loop through all conversations, and add their messages to 'messages'
-      for (int i=0; i<conversations.size(); i++){
-        Conversation curr = conversations.get(i);
-        UUID conversationId = curr.getId();
-        List<Message> currMessages = messageStore.getMessagesInConversation(conversationId);
+      for (int i=1; i<conversations.size(); i++){
+        Conversation curr1 = conversations.get(i);
+        UUID conversationId1 = curr1.getId();
+        List<Message> currMessages = messageStore.getMessagesInConversation(conversationId1);
 
         for(int j=0; j<currMessages.size(); j++){
           messages.add(currMessages.get(j));
         }
       }
-*/
+      messages.sort(new SortbyTime());
 
       request.setAttribute("conversation", conversations);
       request.setAttribute("messages", messages);
