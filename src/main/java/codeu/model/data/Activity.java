@@ -20,7 +20,7 @@ public class Activity {
     return output;
   }
 
-  public Instant getCreation(){
+  public Instant getCreationTime(){
     return creation;
   }
 

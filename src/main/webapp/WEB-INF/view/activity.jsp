@@ -18,9 +18,11 @@
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
+<%@ page import="codeu.model.data.Activity" %>
 <%
 //Conversation conversation = (Conversation) request.getAttribute("conversation");
-List<Message> messages = (List<Message>) request.getAttribute("messages");
+//List<Message> messages = (List<Message>) request.getAttribute("messages");
+List<Activity> activity = (List<Activity>) request.getAttribute("activity");
 %>
 
 
@@ -62,13 +64,11 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <div id="chat">
       <ul>
         <%
-          for (Message message : messages) {
-            String author = UserStore.getInstance()
-              .getUser(message.getAuthorId()).getName();
-            String title= ConversationStore.getInstance().getConversationWithId(message.getConversationId()).getTitle();          
-            
+          for (Activity act : activity) {
+
+            String output = act.getOutput();
         %>
-          <li><strong><%= author %></strong> Sent a message in <%=title %>: "<%= message.getContent() %>"</li>
+            <li><%= output %></li>
         <%
           }
         %>

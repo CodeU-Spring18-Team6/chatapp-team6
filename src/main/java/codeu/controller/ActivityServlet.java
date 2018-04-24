@@ -17,6 +17,7 @@ package codeu.controller;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
+import codeu.model.data.Activity;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import java.util.ArrayList;
 
 /** Servlet class responsible for the activity feed. */
 public class ActivityServlet extends HttpServlet {
@@ -82,9 +84,9 @@ public class ActivityServlet extends HttpServlet {
   }
   /*
   * class needed to implement the comparator for sorting the activity feed.
-  */ 
-  class SortbyTime implements Comparator<Message>{
-    public int compare(Message a, Message b){
+  */
+  class SortbyTime implements Comparator<Activity>{
+    public int compare(Activity a, Activity b){
         return b.getCreationTime().compareTo(a.getCreationTime());
     }
   }
@@ -97,6 +99,8 @@ public class ActivityServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
 
+      List<Activity> activity = new ArrayList<>();
+
       List<Conversation> conversations = conversationStore.getAllConversations();
       if(conversations==null){
         System.out.println("No activity present.");
@@ -104,36 +108,32 @@ public class ActivityServlet extends HttpServlet {
         return;
       }
 
-      //List<Message> messages = null;
-      Conversation curr = conversations.get(0);
-      UUID conversationId = curr.getId();
-      List<Message> messages = messageStore.getMessagesInConversation(conversationId);
+      //loop through all conversations and add to activity
+      for (int i=0; i<conversations.size(); i++){
+        Conversation curr = conversations.get(i);
+        UUID conversationId = curr.getId();
+        String creator = UserStore.getInstance().getUser(curr.getOwnerId()).getName();
+        Activity convo = new Activity( (creator + " created a new conversation: " + curr.getTitle()) , curr.getCreationTime());
+        activity.add(convo);
 
+        List<Message> currMessages = messageStore.getMessagesInConversation(conversationId);
 
-
-
-      //loop through all conversations, and add their messages to 'messages'
-      for (int i=1; i<conversations.size(); i++){
-        Conversation curr1 = conversations.get(i);
-        UUID conversationId1 = curr1.getId();
-        List<Message> currMessages = messageStore.getMessagesInConversation(conversationId1);
-
+        //loop through messages in conversation and add to activity
         for(int j=0; j<currMessages.size(); j++){
-          messages.add(currMessages.get(j));
+          Message currMess = currMessages.get(j);
+          String author = UserStore.getInstance().getUser(currMess.getAuthorId()).getName();
+          String title = ConversationStore.getInstance().getConversationWithId(currMess.getConversationId()).getTitle();
+          Activity mess = new Activity( (author + " sent a message in " + title + ": " + currMess.getContent()), currMess.getCreationTime() );
+          activity.add(mess);
         }
       }
-      //sorts all messages by time.
-      messages.sort(new SortbyTime());
+      //sorts all activity by time.
+      activity.sort(new SortbyTime());
 
-      request.setAttribute("conversation", conversations);
-      request.setAttribute("messages", messages);
+      request.setAttribute("activity", activity);
       request.getRequestDispatcher("/WEB-INF/view/activity.jsp").forward(request, response);
 
   }
-
-
-
-
 
 
 
