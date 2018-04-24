@@ -80,6 +80,9 @@ public class ActivityServlet extends HttpServlet {
   void setMessageStore(MessageStore messageStore) {
     this.messageStore = messageStore;
   }
+  /*
+  * class needed to implement the comparator for sorting the activity feed.
+  */ 
   class SortbyTime implements Comparator<Message>{
     public int compare(Message a, Message b){
         return b.getCreationTime().compareTo(a.getCreationTime());
@@ -119,6 +122,7 @@ public class ActivityServlet extends HttpServlet {
           messages.add(currMessages.get(j));
         }
       }
+      //sorts all messages by time.
       messages.sort(new SortbyTime());
 
       request.setAttribute("conversation", conversations);
