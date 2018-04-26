@@ -27,23 +27,27 @@
 
 <body>
   <%@ include file="/nav.jsp" %>
+  <div id="container">
+    <h1><%=userProfile.getName()%>'s profile</h1>
+    <p><b>About <%=userProfile.getName()%></b></p>
+    <p><%=userProfile.getDescription()%></p>
 
- <h1><%=userProfile.getName()%>'s profile</h1>
- <p><b>About <%=userProfile.getName()%></b></p>
- <p><%=userProfile.getDescription()%></p>
-
- <!-- <%//if (request.getSession().getAttribute("user") != null) { %>
-  <%//if(((User)request.getSession().getAttribute("user")).getName().equals(userProfile.getName())){ %>
-    <h1>Own Profile</h1> 
-  <%//} else { %> 
-    <h1>Other Profile</h1>
-  <%//}%>
- <%//} else { %>
-    <h1>Other Profile</h1>
- <%//} %> -->
-
- 
-
+    <h1>Edit description</h1>
+    <%if (request.getSession().getAttribute("user") != null) { %>
+     <%if(request.getSession().getAttribute("user").equals(userProfile.getName()) ){ %>
+      <form action="/profile" method="POST">
+       <label for="description">New description:</label>
+       <input type="text" name="description" id="description">
+       <br/><br/>
+       <button type="submit">Submit</button>
+      </form>
+     <%} else { %> 
+      <p><b>You don't have permition to change this account's description</b></p>
+     <%}%>
+    <%} else { %>
+      <p><b>Log in to change this account's description</b></p>
+    <%} %>
+ </div>
 </body>
 
 </html>

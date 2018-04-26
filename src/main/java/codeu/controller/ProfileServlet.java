@@ -57,51 +57,11 @@ public class ProfileServlet extends HttpServlet {
     request.getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(request, response);
   }
 
-  /*@Override
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
 
-    String username = (String) request.getSession().getAttribute("user");
-    if (username == null) {
-      // user is not logged in, don't let them add a message
-      response.sendRedirect("/login");
-      return;
-    }
-
-    User user = userStore.getUser(username);
-    if (user == null) {
-      // user was not found, don't let them add a message
-      response.sendRedirect("/login");
-      return;
-    }
-
-    String requestUrl = request.getRequestURI();
-    String conversationTitle = requestUrl.substring("/chat/".length());
-
-    Conversation conversation = conversationStore.getConversationWithTitle(conversationTitle);
-    if (conversation == null) {
-      // couldn't find conversation, redirect to conversation list
-      response.sendRedirect("/conversations");
-      return;
-    }
-
-    String messageContent = request.getParameter("message");
-
-    // this removes any HTML from the message content
-    String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
-
-    Message message =
-        new Message(
-            UUID.randomUUID(),
-            conversation.getId(),
-            user.getId(),
-            cleanedMessageContent,
-            Instant.now());
-
-    messageStore.addMessage(message);
-
-    // redirect to a GET request
-    response.sendRedirect("/chat/" + conversationTitle);
-  }*/
+    
+  }
 
 }
