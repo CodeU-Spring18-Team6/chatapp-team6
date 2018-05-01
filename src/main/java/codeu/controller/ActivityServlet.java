@@ -23,6 +23,8 @@ import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import java.util.Comparator;
@@ -100,6 +102,7 @@ public class ActivityServlet extends HttpServlet {
       throws IOException, ServletException {
 
       List<Activity> activity = new ArrayList<>();
+      DateTimeFormatter formatter= DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy").withZone(ZoneId.systemDefault());
 
       List<Conversation> conversations = conversationStore.getAllConversations();
       if(conversations==null){
@@ -113,7 +116,7 @@ public class ActivityServlet extends HttpServlet {
         Conversation curr = conversations.get(i);
         UUID conversationId = curr.getId();
         String creator = UserStore.getInstance().getUser(curr.getOwnerId()).getName();
-        Activity convo = new Activity( (creator + " created a new conversation: " + curr.getTitle()) , curr.getCreationTime());
+        Activity convo = new Activity( (formatter.format( curr.getCreationTime() )+": "+creator + " created a new conversation: " + curr.getTitle()) , curr.getCreationTime());
         activity.add(convo);
 
         List<Message> currMessages = messageStore.getMessagesInConversation(conversationId);
@@ -123,9 +126,16 @@ public class ActivityServlet extends HttpServlet {
           Message currMess = currMessages.get(j);
           String author = UserStore.getInstance().getUser(currMess.getAuthorId()).getName();
           String title = ConversationStore.getInstance().getConversationWithId(currMess.getConversationId()).getTitle();
-          Activity mess = new Activity( (author + " sent a message in " + title + ": " + currMess.getContent()), currMess.getCreationTime() );
+          Activity mess = new Activity( (formatter.format(currMess.getCreationTime())+": "+author + " sent a message in " + title + ": " + currMess.getContent()), currMess.getCreationTime() );
           activity.add(mess);
         }
+      }
+      //loop through all users and add to activity
+      List<User> people= userStore.getAllUsers();
+      for(int i=0;i<people.size();i++){
+        User temp= people.get(i);
+        Activity act= new Activity((formatter.format(temp.getCreationTime())+": "+temp.getName()+" joined!"), temp.getCreationTime());
+        activity.add(act);
       }
       //sorts all activity by time.
       activity.sort(new SortbyTime());
