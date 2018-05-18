@@ -15,6 +15,7 @@
 --%>
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.data.User" %>
 
 <!DOCTYPE html>
 <html>
@@ -72,6 +73,38 @@
     }
     %>
     <hr/>
+
+    <h1>Direct Messages</h1>
+
+    <%
+    String username = (String) request.getSession().getAttribute("user");
+    System.out.println(username);
+    List<User> users =
+      (List<User>) request.getAttribute("users");
+    if(users == null || users.isEmpty()){
+    %>
+      <p>No users found. Something went terribly wrong. </p>
+    <%
+    }
+    else{
+    %>
+      <ul class="mdl-list">
+    <%
+      for(User user : users){
+        if (!user.getName().equals(username)) {
+    %>
+      <li><a href="/chat/<%= user.getName() %>">
+        <%= user.getName() %></a></li>
+    <%
+        }
+      }
+    %>
+      </ul>
+    <%
+    }
+    %>
+    <hr/>
+
   </div>
 </body>
 </html>
