@@ -78,7 +78,6 @@
 
     <%
     String username = (String) request.getSession().getAttribute("user");
-    System.out.println(username);
     List<User> users =
       (List<User>) request.getAttribute("users");
     if(users == null || users.isEmpty()){
@@ -86,20 +85,40 @@
       <p>No users found. Something went terribly wrong. </p>
     <%
     }
-    else{
+    else {
     %>
       <ul class="mdl-list">
     <%
-      for(User user : users){
-        if (!user.getName().equals(username)) {
+      if (username == null) {
     %>
-      <li><a href="/chat/<%= user.getName() %>">
-        <%= user.getName() %></a></li>
+        <p> Must login to direct message!
     <%
+      } else {
+
+        for(User user : users){
+          if (!user.getName().equals(username)) {
+            int cmp = username.compareTo(user.getName());
+            String url = cmp < 0 ? username+"_"+user.getName() : user.getName()+"_"+username;
+    %>
+            <li><a href="/chat/<%= url %>">
+              <%= user.getName() %></a></li>
+              <!--
+                $$
+                1. Creates a url of the form user1_user2
+                2. TODO:
+                  - check if necessary conversations exists
+                  - if they don't exist, create them. Could either do this in bulk,
+                    or on a need basis. e.g. In ConversationServlet: doGet you could check
+                    all DM urls and create conversations if they don't exist. Other option
+                    is to check and create when user clicks the DM url. 
+                $$
+              -->
+    <%
+          }
         }
       }
     %>
-      </ul>
+    </ul>
     <%
     }
     %>
