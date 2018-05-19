@@ -61,7 +61,12 @@ public class ProfileServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
 
-    
-  }
+    String requestUrl = request.getRequestURI();
+    String userName = requestUrl.substring("/user/".length());
+    String newDescription = request.getParameter("description");
 
+    userStore.updateDescription(userName, newDescription);
+
+    response.sendRedirect("/user/" + userName);
+  }
 }

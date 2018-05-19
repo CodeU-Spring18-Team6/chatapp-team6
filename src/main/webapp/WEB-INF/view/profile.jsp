@@ -35,12 +35,14 @@
     <h1>Edit description</h1>
     <%if (request.getSession().getAttribute("user") != null) { %>
      <%if(request.getSession().getAttribute("user").equals(userProfile.getName()) ){ %>
-      <form action="/profile" method="POST">
+
+      <form action="/user/<%= userProfile.getName() %>" method="POST">
        <label for="description">New description:</label>
        <input type="text" name="description" id="description">
        <br/><br/>
        <button type="submit">Submit</button>
       </form>
+
      <%} else { %> 
       <p><b>You don't have permition to change this account's description</b></p>
      <%}%>
