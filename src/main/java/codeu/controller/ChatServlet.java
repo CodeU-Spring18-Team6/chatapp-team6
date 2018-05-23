@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import java.io.*;
 
 /** Servlet class responsible for the chat page. */
 public class ChatServlet extends HttpServlet {
@@ -89,8 +90,8 @@ public class ChatServlet extends HttpServlet {
     String msgID = request.getParameter("id");
 
     if(msgID!=null){
-      UUID mID= UUID.fromString((String)msgID);
-      messageStore.deleteMessage(mID);
+     UUID mID= UUID.fromString(msgID);
+     messageStore.deleteMessage(mID);
     }
 
     Conversation conversation = conversationStore.getConversationWithTitle(conversationTitle);
