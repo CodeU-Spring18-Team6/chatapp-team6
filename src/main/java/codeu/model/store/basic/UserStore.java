@@ -121,6 +121,10 @@ public class UserStore {
     return false;
   }
 
+  public List<User> getAllUsers() {
+    return users;
+  }
+
   /**
    * Sets the List of Users stored by this UserStore. This should only be called once, when the data
    * is loaded from Datastore.

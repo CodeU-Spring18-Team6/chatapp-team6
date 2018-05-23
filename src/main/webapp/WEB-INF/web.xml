@@ -84,6 +84,13 @@
   <servlet-mapping>
     <servlet-name>ProfileServlet</servlet-name>
     <url-pattern>/user/*</url-pattern>
+    <servlet-name>ActivityServlet</servlet-name>
+    <servlet-class>codeu.controller.ActivityServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ActivityServlet</servlet-name>
+    <url-pattern>/activity</url-pattern>
   </servlet-mapping>
 
 </web-app>
