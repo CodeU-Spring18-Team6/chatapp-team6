@@ -145,17 +145,6 @@ public class PersistentDataStore {
 
     return messages;
   }
-  public void deleteMessage(UUID id){
-      Query query = new Query("chat-messages");
-      PreparedQuery results = datastore.prepare(query);
-      for(Entity entity: results.asIterable()){
-        UUID entUUID= UUID.fromString((String) entity.getProperty("uuid"));
-        if(id.equals(entUUID)){
-          datastore.delete(entity.getKey());
-          break;
-        }
-      }
-  }
 
   /** Write a User object to the Datastore service. */
   public void writeThrough(User user) {

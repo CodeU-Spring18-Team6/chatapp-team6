@@ -71,9 +71,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         String author = UserStore.getInstance()
           .getUser(message.getAuthorId()).getName();
     %>
-      <form action="/chat/<%=conversation.getTitle()%>" method="get">
-        <li><strong><%= author %>:</strong> <%= message.getContent() %><button type="submit" name="id" value="<%=message.getId().toString()%>">PRESSSS</button> </li>
-      </form>
+      <li><strong><%= author %>:</strong> <%= message.getContent() %></li>
     <%
       }
     %>

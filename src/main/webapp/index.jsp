@@ -28,8 +28,6 @@
 
       <ul>
         <li><a href="/login">Login</a> to get started.</li>
-        <li>Go to the <a href="/activity">activity</a> feed to view the latest
-            messages.</li>
         <li>Go to the <a href="/conversations">conversations</a> page to
             create or join a conversation.</li>
         <li>View the <a href="/about.jsp">about</a> page to learn more about the
