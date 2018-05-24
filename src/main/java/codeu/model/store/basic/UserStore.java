@@ -125,6 +125,7 @@ public class UserStore {
     for (User user : users) {
       if (user.getName().equals(username)) {
         user.setDescription(newDescription);
+        persistentStorageAgent.writeThrough(user);
         return true;
       }
     }
