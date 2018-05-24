@@ -86,6 +86,12 @@ public class ChatServlet extends HttpServlet {
       throws IOException, ServletException {
     String requestUrl = request.getRequestURI();
     String conversationTitle = requestUrl.substring("/chat/".length());
+    String msgID = request.getParameter("id");
+
+    if(msgID!=null){
+      UUID mID = UUID.fromString(msgID);
+      messageStore.deleteMessage(mID);
+    }
 
     Conversation conversation = conversationStore.getConversationWithTitle(conversationTitle);
     if (conversation == null) {

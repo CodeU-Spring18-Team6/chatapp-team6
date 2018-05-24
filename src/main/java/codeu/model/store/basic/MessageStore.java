@@ -88,6 +88,18 @@ public class MessageStore {
     persistentStorageAgent.writeThrough(message);
   }
 
+  /** this function deletes the message from the local save and datastore  */
+  public void deleteMessage(UUID id){
+    for(int i=0; i<messages.size();i++){
+      Message a = messages.get(i);
+      if(a.getId().equals(id)){
+        messages.remove(i);
+        break;
+      }
+    }
+    persistentStorageAgent.deleteMessage(id);
+  }
+
   /** Access the current set of Messages within the given Conversation. */
   public List<Message> getMessagesInConversation(UUID conversationId) {
 

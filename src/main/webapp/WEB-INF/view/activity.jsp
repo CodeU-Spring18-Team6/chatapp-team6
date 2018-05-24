@@ -17,16 +17,21 @@
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.store.basic.ConversationStore" %>
+<%@ page import="codeu.model.data.Activity" %>
 <%
-Conversation conversation = (Conversation) request.getAttribute("conversation");
-List<Message> messages = (List<Message>) request.getAttribute("messages");
+//Conversation conversation = (Conversation) request.getAttribute("conversation");
+//List<Message> messages = (List<Message>) request.getAttribute("messages");
+List<Activity> activity = (List<Activity>) request.getAttribute("activity");
 %>
+
 
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title><%= conversation.getTitle() %></title>
-  <link rel="stylesheet" href="/css/main.css" type="text/css">
+  <title>Activity</title>
+  <link rel="stylesheet" href="/css/main.css">
 
   <style>
     #chat {
@@ -43,48 +48,35 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       chatDiv.scrollTop = chatDiv.scrollHeight;
     };
   </script>
+
 </head>
+
+
 <body onload="scrollChat()">
 
   <%@ include file="/nav.jsp" %>
+
   <div id="container">
 
-    <h1><%= conversation.getTitle() %>
-      <a href="" style="float: right">&#8635;</a></h1>
-
-    <hr/>
+    <h1>Activity</h1>
+    <p>Here's whats happening on the site!</p>
 
     <div id="chat">
       <ul>
-    <%
-      for (Message message : messages) {
-        String author = UserStore.getInstance()
-          .getUser(message.getAuthorId()).getName();
-    %>
-    <form action="/chat/<%=conversation.getTitle()%>" method="get">
-      <li><a href="/user/<%= author %>"><strong><%= author %>:</strong></a><%= message.getContent() %> <button type="submit" name="id" value="<%=message.getId().toString()%>">Delete Message</button> </li>
-    </form>
-    <%
-      }
-    %>
+        <%
+          for (Activity act : activity) {
+
+            String output = act.getOutput();
+        %>
+            <li><%= output %></li>
+        <%
+          }
+        %>
       </ul>
     </div>
-
-    <hr/>
-
-    <% if (request.getSession().getAttribute("user") != null) { %>
-    <form action="/chat/<%= conversation.getTitle() %>" method="POST">
-        <input type="text" name="message">
-        <br/>
-        <button type="submit">Send</button>
-    </form>
-    <% } else { %>
-      <p><a href="/login">Login</a> to send a message.</p>
-    <% } %>
-
-    <hr/>
 
   </div>
 
 </body>
+
 </html>
