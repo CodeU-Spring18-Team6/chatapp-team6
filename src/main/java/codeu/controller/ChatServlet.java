@@ -147,7 +147,44 @@ public class ChatServlet extends HttpServlet {
     String messageContent = request.getParameter("message");
 
     // this removes any HTML from the message content
-    String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
+    String cleanedMessageContent;
+
+    char[] messageContentArray = messageContent.toCharArray();
+    if (messageContentArray.length > 5 && messageContentArray[0] == '/' && messageContentArray[1] == 'a' && messageContentArray[2] == 'd' && messageContentArray[3] == 'd' && messageContentArray[4] == ' ') {
+      if(conversation.getPrivacy()){
+        char[] userNameArray = new char[messageContentArray.length - 5];
+        for (int i = 0; i < userNameArray.length; i++ ) {
+          userNameArray[i] = messageContentArray[i+5];
+        }
+        String userName = new String(userNameArray);
+        User addedUser = userStore.getUser(userName);
+        if (addedUser != null) {
+          Boolean userExists = false;
+          String[] participants = conversation.getParticipants();
+          for (String participant:participants) {
+            if (participant.equals(userName)) {
+              userExists = true;
+              break;
+            }
+          }
+          if (userExists) {
+            cleanedMessageContent = "I tried to add " + userName + ". That user is already on this conversation.";
+          }else{
+            conversation.addParticipant(userName);
+            conversationStore.updateParticipants(conversation.getTitle(), userName);
+            cleanedMessageContent = "I added " + userName + " to the conversation.";
+          }
+        }else{
+          cleanedMessageContent = "I tried to add " + userName + ". That user doesn't exists.";
+        }
+      }else{
+        cleanedMessageContent = "This conversation is public. It is not possible to add users.";
+      }
+    }else{
+      cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
+    }
+
+    
 
     Message message =
         new Message(

@@ -121,15 +121,14 @@ public class UserStore {
     return false;
   }
 
-  public boolean updateDescription(String username, String newDescription){
+  public void updateDescription(String username, String newDescription){
     for (User user : users) {
       if (user.getName().equals(username)) {
         user.setDescription(newDescription);
         persistentStorageAgent.writeThrough(user);
-        return true;
+        break;
       }
     }
-    return false;
   }
 
   /**
