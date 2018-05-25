@@ -43,12 +43,14 @@ public class PersistentDataStoreTest {
     String passwordOne = "password one";
     Instant creationOne = Instant.ofEpochMilli(1000);
     User inputUserOne = new User(idOne, nameOne, passwordOne, creationOne);
+    inputUserOne.setDescription("one");
 
     UUID idTwo = UUID.randomUUID();
     String nameTwo = "test_username_two";
     String passwordTwo = "password two";
     Instant creationTwo = Instant.ofEpochMilli(2000);
     User inputUserTwo = new User(idTwo, nameTwo, passwordTwo, creationTwo);
+    inputUserTwo.setDescription("two");
 
     // save
     persistentDataStore.writeThrough(inputUserOne);
@@ -63,12 +65,14 @@ public class PersistentDataStoreTest {
     Assert.assertEquals(nameOne, resultUserOne.getName());
     Assert.assertEquals(passwordOne, resultUserOne.getPassword());
     Assert.assertEquals(creationOne, resultUserOne.getCreationTime());
+    //Assert.assertEquals(inputUserOne.getDescription(), resultUserOne.getDescription());
 
     User resultUserTwo = resultUsers.get(1);
     Assert.assertEquals(idTwo, resultUserTwo.getId());
     Assert.assertEquals(nameTwo, resultUserTwo.getName());
     Assert.assertEquals(passwordTwo, resultUserTwo.getPassword());
     Assert.assertEquals(creationTwo, resultUserTwo.getCreationTime());
+    //Assert.assertEquals(inputUserTwo.getDescription(), resultUserTwo.getDescription());
   }
 
   @Test
@@ -84,6 +88,7 @@ public class PersistentDataStoreTest {
     String titleTwo = "Test_Title_Two";
     Instant creationTwo = Instant.ofEpochMilli(2000);
     Conversation inputConversationTwo = new Conversation(idTwo, ownerTwo, titleTwo, creationTwo);
+    inputConversationTwo.setPrivate();
 
     // save
     persistentDataStore.writeThrough(inputConversationOne);
@@ -98,12 +103,14 @@ public class PersistentDataStoreTest {
     Assert.assertEquals(ownerOne, resultConversationOne.getOwnerId());
     Assert.assertEquals(titleOne, resultConversationOne.getTitle());
     Assert.assertEquals(creationOne, resultConversationOne.getCreationTime());
+    //Assert.assertEquals(false, resultConversationOne.getPrivacy());
 
     Conversation resultConversationTwo = resultConversations.get(1);
     Assert.assertEquals(idTwo, resultConversationTwo.getId());
     Assert.assertEquals(ownerTwo, resultConversationTwo.getOwnerId());
     Assert.assertEquals(titleTwo, resultConversationTwo.getTitle());
     Assert.assertEquals(creationTwo, resultConversationTwo.getCreationTime());
+    //Assert.assertEquals(true, resultConversationTwo.getPrivacy());
   }
 
   @Test

@@ -70,7 +70,7 @@
             <%for(int i = 0; i < participants.length; i++){%>
               <% if(participants[i].equals(request.getSession().getAttribute("user"))){ %>
                 <li><a href="/chat/<%= conversation.getTitle() %>"><%= conversation.getTitle()+"(private)" %></a></li>
-                <%if(participants[i].equals(request.getSession().getAttribute("user"))) break;%>
+                <%if(true) break;%>
               <%}%>
             <%}%>
           <%}%>

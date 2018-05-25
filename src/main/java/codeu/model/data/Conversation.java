@@ -75,6 +75,10 @@ public class Conversation {
     return participantsArray;
   }
 
+  public ArrayList getParticipantsList(){
+    return participants;
+  }
+
   /** Returns the creation time of this Conversation. */
   public Instant getCreationTime() {
     return creation;

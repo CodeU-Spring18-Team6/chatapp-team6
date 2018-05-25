@@ -166,6 +166,7 @@ public class PersistentDataStore {
     userEntity.setProperty("username", user.getName());
     userEntity.setProperty("password", user.getPassword());
     userEntity.setProperty("creation_time", user.getCreationTime().toString());
+    userEntity.setProperty("description", user.getDescription());
     datastore.put(userEntity);
   }
 
@@ -187,6 +188,8 @@ public class PersistentDataStore {
     conversationEntity.setProperty("owner_uuid", conversation.getOwnerId().toString());
     conversationEntity.setProperty("title", conversation.getTitle());
     conversationEntity.setProperty("creation_time", conversation.getCreationTime().toString());
+    conversationEntity.setProperty("isPrivate", conversation.getPrivacy());
+    conversationEntity.setProperty("participants", conversation.getParticipantsList());
     datastore.put(conversationEntity);
   }
 }
