@@ -61,25 +61,29 @@
     else{
     %>
       <ul class="mdl-list">
-    <%
-      for(Conversation conversation : conversations){
-    %>
-      <li><a href="/chat/<%= conversation.getTitle() %>">
-        <%= conversation.getTitle() %></a></li>
-    <%
-      }
-    %>
+      <%for(Conversation conversation : conversations){%>
+        <% if(!conversation.getPrivacy()){ %>
+          <li><a href="/chat/<%= conversation.getTitle() %>"><%= conversation.getTitle() %></a></li>
+        <%}else{%>
+          <% if(request.getSession().getAttribute("user") != null){ %>
+            <%String[] participants = conversation.getParticipants();%>
+            <%for(int i = 0; i < participants.length; i++){%>
+              <% if(participants[i].equals(request.getSession().getAttribute("user"))){ %>
+                <li><a href="/chat/<%= conversation.getTitle() %>"><%= conversation.getTitle()+"(private)" %></a></li>
+                <%if(participants[i].equals(request.getSession().getAttribute("user"))) break;%>
+              <%}%>
+            <%}%>
+          <%}%>
+        <%}%>
+      <%}%>
       </ul>
-    <%
-    }
-    %>
+    <%}%>
     <hr/>
 
     <h1>Direct Messages</h1>
 
     <%
     String username = (String) request.getSession().getAttribute("user");
-    System.out.println(username);
     List<User> users =
       (List<User>) request.getAttribute("users");
     if(users == null || users.isEmpty()){

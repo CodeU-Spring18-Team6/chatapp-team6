@@ -27,8 +27,8 @@ public class Conversation {
   public final UUID owner;
   public final Instant creation;
   public final String title;
-  public Boolean isPrivate;
-  public ArrayList participants;
+  private Boolean isPrivate;
+  private ArrayList participants;
 
 
   /**
@@ -63,8 +63,28 @@ public class Conversation {
     return title;
   }
 
+  public Boolean getPrivacy(){
+    return isPrivate;
+  }
+
+  public String[] getParticipants(){
+    String[] participantsArray = new String[participants.size()];
+    for(int i = 0; i < participants.size(); i++){
+      participantsArray[i] = participants.get(i).toString();
+    }
+    return participantsArray;
+  }
+
   /** Returns the creation time of this Conversation. */
   public Instant getCreationTime() {
     return creation;
   }
+
+  public void setPrivate(){
+    this.isPrivate = true;
+  }
+
+  public void addParticipant(String participantName){
+    this.participants.add(participantName);
+  }  
 }

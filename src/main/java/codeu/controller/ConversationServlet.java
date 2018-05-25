@@ -102,6 +102,8 @@ public class ConversationServlet extends HttpServlet {
     }
 
     String conversationTitle = request.getParameter("conversationTitle");
+    String isPrivate = request.getParameter("private");
+    System.out.println("IS PRIVATE? " + isPrivate);
     if (!conversationTitle.matches("[\\w*]*")) {
       request.setAttribute("error", "Please enter only letters and numbers.");
       request.getRequestDispatcher("/WEB-INF/view/conversations.jsp").forward(request, response);
@@ -117,6 +119,12 @@ public class ConversationServlet extends HttpServlet {
 
     Conversation conversation =
         new Conversation(UUID.randomUUID(), user.getId(), conversationTitle, Instant.now());
+
+    /** -------------- THIS MAY NOT BE WORKING CORRECTLY -----------------*/
+    if (isPrivate != null) {
+      conversation.setPrivate();
+      conversation.addParticipant(username);
+    }
 
     conversationStore.addConversation(conversation);
     response.sendRedirect("/chat/" + conversationTitle);
