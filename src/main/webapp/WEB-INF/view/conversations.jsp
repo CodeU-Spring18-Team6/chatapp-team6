@@ -40,6 +40,7 @@
             <label class="form-control-label">Title:</label>
           <input type="text" name="conversationTitle">
         </div>
+         <input type="checkbox" name="private" value="Private">Make private<br>
 
         <button type="submit">Create</button>
       </form>
