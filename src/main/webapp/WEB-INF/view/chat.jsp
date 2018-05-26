@@ -47,7 +47,24 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 <body onload="scrollChat()">
 
   <%@ include file="/nav.jsp" %>
-  <div id="container">
+  <% Boolean permission = false;
+  String userName = (String)request.getSession().getAttribute("user");
+  if (conversation.getPrivacy()) {
+    if (userName != null) {
+      String[] participants = conversation.getParticipants();
+      for(String participant : participants){
+        if(participant.equals(userName)){
+          permission = true;
+          break;
+        }
+      }
+    }
+  }else{
+    permission = true;
+  }
+  %>
+  <%if(permission){%>
+    <div id="container">
 
     <h1><%= conversation.getTitle() %>
       <a href="" style="float: right">&#8635;</a></h1>
@@ -83,8 +100,12 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <% } %>
 
     <hr/>
-
-  </div>
+    </div>
+  <%}else{%>
+    <h1> This is a private conversation </h1>
+    <h2> You don't have permission to see this conversation </h2>
+  <%}%>
+  
 
 </body>
 </html>
